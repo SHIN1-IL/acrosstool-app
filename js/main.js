@@ -1,4 +1,4 @@
-const HOME_BUTTON_FALLBACK = "images/home-button.svg";
+const HOME_BUTTON_FALLBACK = "/images/home-button.svg";
 const BURST_RAY_COUNT = 20;
 const BURST_DURATION_MS = 2000;
 

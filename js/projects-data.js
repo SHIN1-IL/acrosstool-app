@@ -8,8 +8,8 @@ const PROJECTS = [
     tagline: "PIMS: Self-Owned Cloud Infrastructure Managed Service.",
     description:
       "A managed infrastructure service that empowers users to deploy and control their own secure cloud servers seamlessly without technical complexity.",
-    image: "images/projects/bridgware.png",
-    url: "/coming-soon.html",
+    image: "/images/projects/bridgware.png",
+    url: "/coming-soon",
   },
   {
     title: "Product & Solution",
@@ -18,8 +18,8 @@ const PROJECTS = [
       "Innovative SaaS Solutions: From Automated Code Audits to Managed WebOps",
       "Empowering Business through Managed SaaS & Infrastructure-as-a-Service (IaaS)",
     ],
-    image: "images/projects/project-2.png",
-    url: "/coming-soon.html",
+    image: "/images/projects/project-2.png",
+    url: "/coming-soon",
   },
   {
     title: "Full-stack & WebOps",
@@ -28,7 +28,7 @@ const PROJECTS = [
       "Building Resilient SaaS Architectures through Expert WebOps and Full-stack Development",
       "Next-Gen WebOps & SaaS Development: Architecting Automated Business Solutions",
     ],
-    image: "images/projects/project-3.png",
-    url: "/coming-soon.html",
+    image: "/images/projects/project-3.png",
+    url: "/coming-soon",
   },
 ];

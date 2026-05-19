@@ -3,31 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon — AcrossTool</title>
+  <title>Projects — AcrossTool</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
   <header class="site-header">
     <div class="site-header__left">
       <a href="/" class="home-btn" id="home-btn" aria-label="홈으로">
-        <img src="images/home-button.png" alt="" class="home-btn__img" width="36" height="36">
+        <img src="/images/home-button.png" alt="" class="home-btn__img" width="36" height="36">
       </a>
       <nav class="site-nav" aria-label="주요 메뉴">
-        <a href="/projects.html" class="nav-link nav-link--active">Project</a>
-        <a href="/contact.html" class="nav-link">Contact</a>
+        <a href="/projects" class="nav-link nav-link--active">Project</a>
+        <a href="/contact" class="nav-link">Contact</a>
       </nav>
     </div>
   </header>
 
-  <main class="coming-soon">
-    <p class="coming-soon__message">
-      Deploying Innovation: The New Standard of WebOps &amp; SaaS is Coming Soon.
-    </p>
+  <main class="page-main">
+    <section class="page-intro">
+      <h1 class="page-title">Projects</h1>
+    </section>
+
+    <div id="projects-grid" class="projects-grid" role="list"></div>
   </main>
 
-  <script src="js/main.js"></script>
+  <script src="/js/projects-data.js"></script>
+  <script src="/js/projects.js"></script>
+  <script src="/js/main.js"></script>
 </body>
 </html>
