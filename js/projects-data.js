@@ -9,7 +9,7 @@ const PROJECTS = [
     description:
       "A managed infrastructure service that empowers users to deploy and control their own secure cloud servers seamlessly without technical complexity.",
     image: "images/projects/bridgware.png",
-    url: "coming-soon.html",
+    url: "/coming-soon.html",
   },
   {
     title: "Product & Solution",
@@ -19,7 +19,7 @@ const PROJECTS = [
       "Empowering Business through Managed SaaS & Infrastructure-as-a-Service (IaaS)",
     ],
     image: "images/projects/project-2.png",
-    url: "coming-soon.html",
+    url: "/coming-soon.html",
   },
   {
     title: "Full-stack & WebOps",
@@ -29,6 +29,6 @@ const PROJECTS = [
       "Next-Gen WebOps & SaaS Development: Architecting Automated Business Solutions",
     ],
     image: "images/projects/project-3.png",
-    url: "coming-soon.html",
+    url: "/coming-soon.html",
   },
 ];
