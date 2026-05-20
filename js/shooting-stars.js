@@ -2,11 +2,29 @@ const METEOR_DURATION_MS = 2000;
 const MIN_INTERVAL_MS = 1800;
 const MAX_INTERVAL_MS = 4200;
 
+let spawnTimerId = null;
+let isRunning = false;
+let containerRef = null;
+
 function randomBetween(min, max) {
   return min + Math.random() * (max - min);
 }
 
-function createMeteor(container) {
+function clearSpawnTimer() {
+  if (spawnTimerId !== null) {
+    window.clearTimeout(spawnTimerId);
+    spawnTimerId = null;
+  }
+}
+
+function clearActiveMeteors() {
+  if (!containerRef) return;
+  containerRef.querySelectorAll(".meteor").forEach((el) => el.remove());
+}
+
+function createMeteor() {
+  if (!containerRef || document.hidden) return;
+
   const meteor = document.createElement("span");
   meteor.className = "meteor";
 
@@ -21,22 +39,61 @@ function createMeteor(container) {
   meteor.style.top = `${top}%`;
   meteor.style.animationDuration = `${METEOR_DURATION_MS}ms`;
 
-  container.appendChild(meteor);
+  containerRef.appendChild(meteor);
   meteor.addEventListener("animationend", () => meteor.remove());
 }
 
-function scheduleMeteor(container) {
-  createMeteor(container);
+function scheduleNextMeteor() {
+  clearSpawnTimer();
+
+  if (!isRunning || !containerRef || document.hidden) return;
+
   const delay = randomBetween(MIN_INTERVAL_MS, MAX_INTERVAL_MS);
-  window.setTimeout(() => scheduleMeteor(container), delay);
+  spawnTimerId = window.setTimeout(() => {
+    spawnTimerId = null;
+    if (!isRunning || document.hidden) return;
+
+    createMeteor();
+    scheduleNextMeteor();
+  }, delay);
+}
+
+function startShootingStars() {
+  if (!containerRef || isRunning) return;
+
+  isRunning = true;
+  createMeteor();
+  scheduleNextMeteor();
+}
+
+function stopShootingStars() {
+  isRunning = false;
+  clearSpawnTimer();
+  clearActiveMeteors();
+}
+
+function handleVisibilityChange() {
+  if (document.hidden) {
+    stopShootingStars();
+  } else {
+    startShootingStars();
+  }
 }
 
 function initShootingStars() {
-  const container = document.getElementById("shooting-stars");
-  if (!container) return;
+  containerRef = document.getElementById("shooting-stars");
+  if (!containerRef) return;
 
-  createMeteor(container);
-  window.setTimeout(() => scheduleMeteor(container), randomBetween(400, 1200));
+  document.addEventListener("visibilitychange", handleVisibilityChange);
+  window.addEventListener("pagehide", () => stopShootingStars());
+  window.addEventListener("pageshow", (e) => {
+    if (!e.persisted) return;
+    startShootingStars();
+  });
+
+  if (!document.hidden) {
+    startShootingStars();
+  }
 }
 
 document.addEventListener("DOMContentLoaded", initShootingStars);
