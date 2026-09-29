@@ -15,6 +15,7 @@ const PROJECTS = [
       ko: "기술적인 복잡함 없이, 안전한 클라우드 서버를 직접 배포하고 관리할 수 있게 돕는 인프라 관리 서비스입니다.",
     },
     image: "/images/projects/bridgware.png",
+    preview: "wall",
     url: "/coming-soon",
   },
   {
@@ -34,6 +35,7 @@ const PROJECTS = [
       ],
     },
     image: "/images/projects/project-2.png",
+    preview: "lab",
     url: "/coming-soon",
   },
   {
@@ -53,6 +55,7 @@ const PROJECTS = [
       ],
     },
     image: "/images/projects/project-3.png",
+    preview: "monitor",
     url: "/coming-soon",
   },
 ];

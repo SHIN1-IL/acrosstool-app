@@ -18,14 +18,7 @@ function renderProjects(projects) {
       const description = localizeField(project.description);
       return `
     <article class="project-card" role="listitem">
-      <div class="project-card__image-wrap">
-        <img
-          class="project-card__image"
-          src="${escapeHtml(project.image)}"
-          alt="${escapeHtml(project.title)}"
-          loading="lazy"
-        />
-      </div>
+      ${renderProjectMedia(project)}
       <div class="project-card__body">
         <div class="project-card__content">
           <h2 class="project-card__title">${escapeHtml(project.title)}</h2>
@@ -48,6 +41,23 @@ function renderProjects(projects) {
   `;
     })
     .join("");
+}
+
+function renderProjectMedia(project) {
+  if (project.preview && typeof projectPreviewMarkup === "function") {
+    return `<div class="project-card__image-wrap">${projectPreviewMarkup(project.preview, project.title)}</div>`;
+  }
+
+  return `
+    <div class="project-card__image-wrap">
+      <img
+        class="project-card__image"
+        src="${escapeHtml(project.image)}"
+        alt="${escapeHtml(project.title)}"
+        loading="lazy"
+      />
+    </div>
+  `;
 }
 
 function renderDescriptions(description) {
