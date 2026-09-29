@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,33 +8,39 @@
   <link rel="apple-touch-icon" href="/images/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Noto+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/styles.css">
   <script src="/js/theme.js"></script>
 </head>
-<body>
+<body data-i18n-title="meta.contact">
   <div id="shooting-stars" class="shooting-stars" aria-hidden="true"></div>
 
   <header class="site-header">
     <div class="site-header__left">
-      <a href="/" class="home-btn" id="home-btn" aria-label="홈으로">
+      <a href="/" class="home-btn" id="home-btn" data-i18n-aria="nav.home" aria-label="Home">
         <img src="/images/home-button.svg" alt="" class="home-btn__img">
       </a>
-      <nav class="site-nav" aria-label="주요 메뉴">
-        <a href="/projects" class="nav-link">Project</a>
-        <a href="/contact" class="nav-link nav-link--active">Contact</a>
+      <nav class="site-nav" data-i18n-aria="nav.menu" aria-label="Main menu">
+        <a href="/projects" class="nav-link" data-i18n="nav.projects">Project</a>
+        <a href="/contact" class="nav-link nav-link--active" data-i18n="nav.contact">Contact</a>
       </nav>
+    </div>
+    <div class="lang-switch" role="group" data-i18n-aria="nav.language" aria-label="Language">
+      <button type="button" class="lang-switch__btn" data-lang="en">EN</button>
+      <span class="lang-switch__sep" aria-hidden="true">/</span>
+      <button type="button" class="lang-switch__btn" data-lang="ko">KO</button>
     </div>
   </header>
 
   <main class="page-main">
     <section class="page-intro">
-      <h1 class="page-title">Contact</h1>
+      <h1 class="page-title" data-i18n="contact.title">Contact</h1>
     </section>
 
     <ul id="contact-list" class="contact-list"></ul>
   </main>
 
+  <script src="/js/i18n.js"></script>
   <script src="/js/contact-data.js"></script>
   <script src="/js/contact.js"></script>
   <script src="/js/shooting-stars.js"></script>
