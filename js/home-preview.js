@@ -1,4 +1,9 @@
 const PREVIEW_DELAY_MS = 3000;
+const PREVIEW_REVEAL_MS = 2900;
+const PREVIEW_HOLD_MS = 1800;
+const PREVIEW_RETURN_MS = 1150;
+
+let previewTimer = 0;
 
 function escapePreviewHtml(str) {
   const div = document.createElement("div");
@@ -50,10 +55,30 @@ function renderHomePreview() {
 
 function revealHomePreview() {
   const preview = document.getElementById("home-preview");
+  renderHomePreview();
   document.body.classList.add("is-preview");
   if (!preview) return;
   preview.removeAttribute("aria-hidden");
   preview.removeAttribute("inert");
+}
+
+function concealHomePreview() {
+  const preview = document.getElementById("home-preview");
+  document.body.classList.remove("is-preview");
+  if (!preview) return;
+  preview.setAttribute("aria-hidden", "true");
+  preview.setAttribute("inert", "");
+}
+
+function queuePreviewCycle() {
+  window.clearTimeout(previewTimer);
+  previewTimer = window.setTimeout(() => {
+    revealHomePreview();
+    previewTimer = window.setTimeout(() => {
+      concealHomePreview();
+      previewTimer = window.setTimeout(queuePreviewCycle, PREVIEW_RETURN_MS);
+    }, PREVIEW_REVEAL_MS + PREVIEW_HOLD_MS);
+  }, PREVIEW_DELAY_MS);
 }
 
 function initHomePreview() {
@@ -62,7 +87,7 @@ function initHomePreview() {
 
   renderHomePreview();
   document.addEventListener("acrosstool:lang", renderHomePreview);
-  window.setTimeout(revealHomePreview, PREVIEW_DELAY_MS);
+  queuePreviewCycle();
 }
 
 if (document.readyState === "loading") {

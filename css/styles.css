@@ -289,6 +289,7 @@ html[lang="ko"] body {
   transform: scaleY(0);
   transform-origin: top center;
   pointer-events: none;
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .home-preview__item {
@@ -299,6 +300,7 @@ html[lang="ko"] body {
   border-top: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
   opacity: 0;
   transform: translateY(-1.75rem);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .home-preview__row:last-child .home-preview__item {
@@ -1148,7 +1150,9 @@ html[lang="ko"] body {
   .hero-title,
   .hero-subtitle,
   .hero-copy,
-  .home-preview {
+  .home-preview,
+  .home-preview__item,
+  .home-preview__mark {
     transition: none;
   }
 
