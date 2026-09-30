@@ -10,10 +10,17 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Noto+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/styles.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.170.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.170.0/examples/jsm/"
+      }
+    }
+  </script>
   <script src="/js/theme.js"></script>
 </head>
-<body class="page-home" data-i18n-title="meta.home">
-  <div id="shooting-stars" class="shooting-stars" aria-hidden="true"></div>
+<body class="page-home is-preview" data-i18n-title="meta.home">
 
   <header class="site-header">
     <div class="site-header__left">
@@ -40,8 +47,11 @@
         </div>
         <p class="hero-subtitle" data-i18n="home.subtitle">AcrossTool Crafting Ideas through Development</p>
       </div>
-      <aside class="home-preview" id="home-preview" data-i18n-aria="projects.title" aria-label="Projects" aria-hidden="true" inert>
-        <div class="home-preview__list" id="home-preview-list"></div>
+      <aside class="home-preview" id="home-preview" aria-label="Robot">
+        <div class="home-robot-stage">
+          <canvas id="home-robot" class="home-robot" aria-hidden="true"></canvas>
+        </div>
+        <div class="home-preview__list" id="home-preview-list" hidden></div>
       </aside>
     </div>
   </main>
@@ -49,7 +59,11 @@
   <script src="/js/i18n.js"></script>
   <script src="/js/projects-data.js"></script>
   <script src="/js/home-preview.js"></script>
-  <script src="/js/shooting-stars.js"></script>
+  <script type="module">
+    import("/js/home-robot.js").catch((error) => {
+      document.body.dataset.robotError = String(error);
+    });
+  </script>
   <script src="/js/main.js"></script>
 </body>
 </html>

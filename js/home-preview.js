@@ -55,7 +55,6 @@ function renderHomePreview() {
 
 function revealHomePreview() {
   const preview = document.getElementById("home-preview");
-  renderHomePreview();
   document.body.classList.add("is-preview");
   if (!preview) return;
   preview.removeAttribute("aria-hidden");
@@ -85,9 +84,7 @@ function initHomePreview() {
   if (!document.body.classList.contains("page-home")) return;
   if (!document.getElementById("home-preview")) return;
 
-  renderHomePreview();
-  document.addEventListener("acrosstool:lang", renderHomePreview);
-  queuePreviewCycle();
+  revealHomePreview();
 }
 
 if (document.readyState === "loading") {
