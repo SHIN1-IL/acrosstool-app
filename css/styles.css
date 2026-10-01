@@ -7,19 +7,20 @@
 }
 
 :root {
-  --bg: #000000;
-  --text: #f5f5f5;
-  --text-muted: #888888;
-  --text-subtle: #6a6a6a;
-  --border: #222222;
-  --accent: #ffffff;
-  --card-bg: #0a0a0a;
-  --card-image-bg: #111111;
-  --card-hover-border: #444444;
+  --bg: #ffffff;
+  --text: #000000;
+  --text-muted: #555555;
+  --text-subtle: #666666;
+  --border: #e0e0e0;
+  --accent: #000000;
+  --card-bg: #f7f7f7;
+  --card-image-bg: #eeeeee;
+  --card-hover-border: #aaaaaa;
   --font: "Instrument Sans", "Noto Sans KR", system-ui, -apple-system, sans-serif;
   --header-pad: clamp(1.25rem, 4vw, 2.5rem);
   --page-max: 72rem;
-  --meteor-color: #ffffff;
+  --meteor-color: #000000;
+  color-scheme: only light;
 }
 
 html[data-theme="light"] {
@@ -488,7 +489,7 @@ html[lang="ko"] body {
   display: flex;
   flex-direction: column;
   height: 100%;
-  border: 1px solid var(--border);
+  border: 2px solid #000000;
   border-radius: 0.5rem;
   overflow: hidden;
   background: var(--card-bg);
@@ -496,7 +497,7 @@ html[lang="ko"] body {
 }
 
 .project-card:hover {
-  border-color: var(--card-hover-border);
+  border-color: #000000;
   transform: translateY(-2px);
 }
 
@@ -526,7 +527,7 @@ html[lang="ko"] body {
   height: 100%;
   overflow: hidden;
   background: #ffffff;
-  color: #2a2a2a;
+  color: #000000;
   transition: transform 0.4s ease;
 }
 
@@ -534,26 +535,29 @@ html[lang="ko"] body {
   fill: #ffffff;
 }
 
-.preview-wall__hill--far {
-  fill: #e4e4e4;
+.preview-wall__hill {
+  stroke: #000000;
+  stroke-width: 3;
+  stroke-linejoin: round;
+}
+
+.preview-wall__hill--far,
+.preview-wall__hill--near {
+  fill: #ffffff;
 }
 
 .preview-wall__hill--mid {
-  fill: #c6c6c6;
-}
-
-.preview-wall__hill--near {
-  fill: #dcdcdc;
+  fill: #000000;
 }
 
 .preview-wall__fill,
 .preview-wall__tower rect {
-  fill: #3a3a3a;
+  fill: #000000;
 }
 
 .preview-wall__route {
   fill: none;
-  stroke: #3a3a3a;
+  stroke: #000000;
   stroke-width: 16;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -568,8 +572,8 @@ html[lang="ko"] body {
 }
 
 .preview-wall__shield {
-  fill: #d2d2d2;
-  stroke: #6a6a6a;
+  fill: #ffffff;
+  stroke: #000000;
   stroke-width: 2;
 }
 
@@ -597,7 +601,7 @@ html[lang="ko"] body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  border: 1px solid #d4d4d4;
+  border: 1px solid #000000;
   border-radius: 0.45rem;
   background: #ffffff;
 }
@@ -608,14 +612,14 @@ html[lang="ko"] body {
   align-items: center;
   height: 1.15rem;
   padding: 0 0.55rem;
-  border-bottom: 1px solid #e6e6e6;
+  border-bottom: 1px solid #000000;
 }
 
 .preview-lab__chrome span {
   width: 0.38rem;
   height: 0.38rem;
   border-radius: 50%;
-  background: #b5b5b5;
+  background: #000000;
 }
 
 .preview-lab__body {
@@ -638,8 +642,8 @@ html[lang="ko"] body {
 }
 
 .preview-lab__plotwrap {
-  border-left: 1px solid #e4e4e4;
-  border-right: 1px solid #e4e4e4;
+  border-left: 1px solid #000000;
+  border-right: 1px solid #000000;
 }
 
 .preview-lab__plot {
@@ -669,6 +673,7 @@ html[lang="ko"] body {
   display: block;
   height: 0.28rem;
   border-radius: 1px;
+  background: #000000;
 }
 
 .preview-lab__file {
@@ -677,7 +682,7 @@ html[lang="ko"] body {
 
 .preview-lab__axis {
   fill: none;
-  stroke: #c8c8c8;
+  stroke: #000000;
   stroke-width: 1.25;
 }
 
@@ -687,16 +692,10 @@ html[lang="ko"] body {
   animation: preview-dot 2.8s ease-in-out infinite;
 }
 
-.preview-lab__dot--0 {
-  fill: #2a2a2a;
-}
-
-.preview-lab__dot--1 {
-  fill: #6a6a6a;
-}
-
+.preview-lab__dot--0,
+.preview-lab__dot--1,
 .preview-lab__dot--2 {
-  fill: #a3a3a3;
+  fill: #000000;
 }
 
 .preview-lab__dots circle:nth-child(even) {
@@ -706,7 +705,8 @@ html[lang="ko"] body {
 
 .preview-lab__guide {
   fill: none;
-  stroke: #c2c2c2;
+  stroke: #000000;
+  stroke-dasharray: 4 5;
   stroke-width: 1.6;
   stroke-linecap: round;
 }
@@ -719,12 +719,13 @@ html[lang="ko"] body {
   animation: preview-wall-travel 3.4s linear infinite;
 }
 
-.preview-lab__series--a {
-  stroke: #1c1c1c;
+.preview-lab__series--a,
+.preview-lab__series--b {
+  stroke: #000000;
 }
 
 .preview-lab__series--b {
-  stroke: #8a8a8a;
+  stroke-dasharray: 8 14;
   animation-duration: 4.1s;
   animation-delay: -1.4s;
 }
@@ -751,9 +752,7 @@ html[lang="ko"] body {
 }
 
 .preview-desk {
-  background:
-    radial-gradient(ellipse at 50% 82%, rgba(0, 0, 0, 0.05), transparent 46%),
-    #ffffff;
+  background: #ffffff;
 }
 
 .preview-monitor {
@@ -768,7 +767,7 @@ html[lang="ko"] body {
   height: 78%;
   padding: 0.42rem;
   border-radius: 0.5rem;
-  background: #bdbdbd;
+  background: #000000;
 }
 
 .preview-monitor__screen {
@@ -778,7 +777,8 @@ html[lang="ko"] body {
   padding: 0.4rem 0.35rem;
   overflow: hidden;
   border-radius: 0.2rem;
-  background: #f7f7f7;
+  background: #ffffff;
+  border: 1px solid #000000;
 }
 
 .preview-monitor__col {
@@ -802,7 +802,7 @@ html[lang="ko"] body {
   flex: 0 0 4px;
   height: 4px;
   border-radius: 1px;
-  background: #2e2e2e;
+  background: #000000;
   transform-origin: left center;
   transform: scaleX(0);
   animation-duration: 1.9s;
@@ -810,12 +810,9 @@ html[lang="ko"] body {
   animation-iteration-count: infinite;
 }
 
-.preview-monitor__line:nth-child(3n) {
-  background: #9a9a9a;
-}
-
+.preview-monitor__line:nth-child(3n),
 .preview-monitor__line:nth-child(3n + 2) {
-  background: #6a6a6a;
+  background: #000000;
 }
 
 .preview-monitor__col .preview-monitor__line:nth-child(1) { width: 88%; animation-name: preview-type-1; }
@@ -837,7 +834,7 @@ html[lang="ko"] body {
   width: 14%;
   height: 11%;
   margin: 0 auto;
-  background: #8f8f8f;
+  background: #000000;
 }
 
 .preview-monitor__base {
@@ -845,7 +842,7 @@ html[lang="ko"] body {
   height: 6%;
   margin: 0 auto;
   border-radius: 0 0 0.35rem 0.35rem;
-  background: #7a7a7a;
+  background: #000000;
 }
 
 .preview-keyboard {
@@ -855,10 +852,11 @@ html[lang="ko"] body {
   width: 34%;
   height: 16%;
   border-radius: 0.35rem;
-  background-color: #d5d5d5;
+  border: 2px solid #000000;
+  background-color: #ffffff;
   background-image:
-    linear-gradient(#ececec 1px, transparent 1px),
-    linear-gradient(90deg, #ececec 1px, transparent 1px);
+    linear-gradient(#000000 1px, transparent 1px),
+    linear-gradient(90deg, #000000 1px, transparent 1px);
   background-size: 0.72rem 0.42rem;
   background-position: 0.28rem 0.28rem;
 }
@@ -870,7 +868,7 @@ html[lang="ko"] body {
   width: 7%;
   height: 11%;
   border-radius: 40% 40% 46% 46%;
-  background: #8a8a8a;
+  background: #000000;
 }
 
 .preview-plant {
@@ -880,7 +878,7 @@ html[lang="ko"] body {
   width: 8%;
   height: 8%;
   border-radius: 0 0 0.2rem 0.2rem;
-  background: #9a9a9a;
+  background: #000000;
 }
 
 .preview-plant span,
@@ -892,7 +890,8 @@ html[lang="ko"] body {
   width: 170%;
   height: 120%;
   border-radius: 50%;
-  background: #7d7d7d;
+  background: #ffffff;
+  border: 2px solid #000000;
   transform: translateX(-50%);
 }
 
@@ -900,7 +899,8 @@ html[lang="ko"] body {
   width: 90%;
   height: 150%;
   bottom: 95%;
-  background: #5e5e5e;
+  background: #ffffff;
+  border: 2px solid #000000;
 }
 
 .preview-badge {
@@ -910,9 +910,9 @@ html[lang="ko"] body {
   width: 13%;
   aspect-ratio: 1;
   border-radius: 0.4rem;
-  border: 1px solid #d0d0d0;
-  background: #f3f3f3;
-  color: #3a3a3a;
+  border: 1px solid #000000;
+  background: #ffffff;
+  color: #000000;
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: -0.03em;
@@ -969,6 +969,8 @@ html[lang="ko"] body {
   flex-direction: column;
   flex: 1;
   padding: 1.25rem 1.5rem 1.5rem;
+  background: #000000;
+  color: #ffffff;
 }
 
 .project-card__content {
@@ -992,28 +994,28 @@ html[lang="ko"] body {
   margin-top: 0.5rem;
   font-size: 0.8125rem;
   font-weight: 500;
-  color: var(--text-muted);
+  color: #ffffff;
   line-height: 1.45;
 }
 
 .project-card__desc {
   margin-top: 0.375rem;
   font-size: 0.9375rem;
-  color: var(--text-muted);
+  color: #ffffff;
   line-height: 1.55;
 }
 
 .project-card__tagline + .project-card__desc {
   margin-top: 0.5rem;
   font-size: 0.75rem;
-  color: var(--text-subtle);
+  color: #ffffff;
   line-height: 1.6;
 }
 
 .project-card__desc + .project-card__desc {
   margin-top: 0.5rem;
   font-size: 0.75rem;
-  color: var(--text-subtle);
+  color: #ffffff;
 }
 
 .project-card__link {
@@ -1021,12 +1023,12 @@ html[lang="ko"] body {
   margin-top: 0;
   font-size: 0.875rem;
   font-weight: 500;
-  color: var(--text-muted);
+  color: #ffffff;
   transition: color 0.2s ease;
 }
 
 .project-card__link:hover {
-  color: var(--text);
+  color: #ffffff;
 }
 
 /* Contact list */

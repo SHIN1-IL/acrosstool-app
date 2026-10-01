@@ -21,10 +21,9 @@ function wallPreview(label) {
     <svg class="project-card__preview preview-wall" viewBox="0 0 640 400" role="img" aria-label="${label}">
       <defs>
         <linearGradient id="wall-meteor-tail" gradientUnits="userSpaceOnUse" x1="4" y1="0" x2="-120" y2="0">
-          <stop offset="0" stop-color="#ffffff"></stop>
-          <stop offset="0.18" stop-color="#d0d0d0"></stop>
-          <stop offset="0.55" stop-color="#5c5c5c"></stop>
-          <stop offset="1" stop-color="#5c5c5c" stop-opacity="0"></stop>
+          <stop offset="0" stop-color="#000000"></stop>
+          <stop offset="0.72" stop-color="#000000"></stop>
+          <stop offset="1" stop-color="#000000" stop-opacity="0"></stop>
         </linearGradient>
       </defs>
       <rect class="preview-wall__sky" width="640" height="400"></rect>
@@ -63,8 +62,8 @@ function wallPreview(label) {
         <animateTransform attributeName="transform" type="translate" values="128 294; 564 46; 564 46" keyTimes="0;0.7;1" dur="2.6s" repeatCount="indefinite"></animateTransform>
         <g transform="rotate(-29.6)">
           <polygon points="6,-2.4 -118,0 6,2.4" fill="url(#wall-meteor-tail)"></polygon>
-          <circle r="7" fill="#ffffff" opacity="0.9"></circle>
-          <circle r="3.4" fill="#ffffff" stroke="#6f6f6f" stroke-width="0.7"></circle>
+          <circle r="7" fill="#ffffff" stroke="#000000" stroke-width="1.2"></circle>
+          <circle r="3.4" fill="#000000"></circle>
         </g>
       </g>
     </svg>
@@ -152,8 +151,7 @@ function monitorPreview(label) {
 function previewMarquee(regionClass, barClass, widths, duration) {
   const bars = widths
     .map((width, index) => {
-      const tone = 0.28 + ((index * 13) % 48) / 100;
-      return `<span class="${barClass}" style="width:${width}%;background:rgba(32,32,32,${tone.toFixed(2)})"></span>`;
+      return `<span class="${barClass}" style="width:${width}%"></span>`;
     })
     .join("");
   return `

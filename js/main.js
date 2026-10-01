@@ -17,11 +17,4 @@ function initHomeButton() {
     });
   }
 
-  const isHome = document.body.classList.contains("page-home");
-  if (!isHome) return;
-
-  homeBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    toggleTheme();
-  });
 }

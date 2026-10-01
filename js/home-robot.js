@@ -51,6 +51,8 @@ function initHomeRobot(canvas) {
   robot.position.set(0.18, 0, 0);
   robot.rotation.y = -0.42;
   scene.add(robot);
+  const body = new THREE.Group();
+  robot.add(body);
 
   const point = (x, y, z) => new THREE.Vector3(x, y, z);
 
@@ -74,13 +76,6 @@ function initHomeRobot(canvas) {
     return add(parent, mesh);
   }
 
-  function limb(start, end, radius, joinStart = false, startScale = 1, endScale = 1) {
-    capsule(robot, start, end, radius * 0.38, jointMat);
-    capsule(robot, start, end, radius, shellMat);
-    if (joinStart) ball(robot, start, radius * 0.7 * startScale, jointMat);
-    ball(robot, end, radius * 0.62 * endScale, jointMat);
-  }
-
   const hip = point(0, 0.46, 0);
   const chest = point(0, 0.7, 0.02);
   const collar = point(0, 0.86, 0.03);
@@ -88,52 +83,35 @@ function initHomeRobot(canvas) {
   const torso = new THREE.Mesh(new THREE.SphereGeometry(0.2, 36, 28), shellMat);
   torso.position.set(0, 0.66, 0.01);
   torso.scale.set(1.2, 1.05, 0.92);
-  add(robot, torso);
+  add(body, torso);
 
   const belly = new THREE.Mesh(new THREE.SphereGeometry(0.15, 28, 20), shellMat);
   belly.position.set(0, 0.5, 0.03);
   belly.scale.set(1.15, 0.85, 0.9);
-  add(robot, belly);
+  add(body, belly);
 
   const chestJoint = new THREE.Mesh(new THREE.TorusGeometry(0.105, 0.014, 10, 28), jointMat);
   chestJoint.rotation.x = Math.PI / 2;
   chestJoint.position.set(0, 0.575, 0.09);
-  add(robot, chestJoint);
+  add(body, chestJoint);
   const hipJoint = new THREE.Mesh(new THREE.TorusGeometry(0.078, 0.013, 10, 24), jointMat);
   hipJoint.rotation.x = Math.PI / 2;
   hipJoint.position.set(0, 0.43, 0.07);
   add(robot, hipJoint);
 
-  ball(robot, collar, 0.045, jointMat);
-  capsule(robot, chest, collar, 0.04, jointMat);
+  ball(body, collar, 0.045, jointMat);
+  capsule(body, chest, collar, 0.04, jointMat);
 
   const logo = makeChestLogo();
   logo.position.set(0, 0.71, 0.21);
-  robot.add(logo);
+  body.add(logo);
 
   const arms = [createArm(1), createArm(-1)];
-
-  const hipL = point(0.09, 0.44, 0.01);
-  const kneeL = point(0.1, 0.24, 0.03);
-  const ankleL = point(0.1, 0.12, 0.03);
-  limb(hip, hipL, 0.04);
-  limb(hipL, kneeL, 0.048, true, 1, 0.35);
-  limb(kneeL, ankleL, 0.04, true, 0.35, 1);
-  addKneeLine(kneeL);
-  addFoot(ankleL);
-
-  const hipR = point(-0.09, 0.44, 0.01);
-  const kneeR = point(-0.1, 0.24, 0.03);
-  const ankleR = point(-0.1, 0.12, 0.03);
-  limb(hip, hipR, 0.04);
-  limb(hipR, kneeR, 0.048, true, 1, 0.35);
-  limb(kneeR, ankleR, 0.04, true, 0.35, 1);
-  addKneeLine(kneeR);
-  addFoot(ankleR);
+  const legs = [createLeg(1), createLeg(-1)];
 
   const neck = new THREE.Group();
   neck.position.copy(collar);
-  robot.add(neck);
+  body.add(neck);
   const head = new THREE.Group();
   head.rotation.order = "YXZ";
   neck.add(head);
@@ -183,11 +161,18 @@ function initHomeRobot(canvas) {
     const dt = clock.getDelta();
     elapsed += dt;
     if (!reducedMotion) {
-      head.rotation.y = THREE.MathUtils.damp(head.rotation.y, targetYaw, 7, dt);
-      head.rotation.x = THREE.MathUtils.damp(head.rotation.x, targetPitch, 7, dt);
       const idle = performance.now() - pointerAt > 2000;
       typing = THREE.MathUtils.damp(typing, idle ? 1 : 0, 4.5, dt);
+      const lookYaw = THREE.MathUtils.lerp(targetYaw, -0.24, typing);
+      const lookPitch = THREE.MathUtils.lerp(targetPitch, 0.64, typing);
+      head.rotation.y = THREE.MathUtils.damp(head.rotation.y, lookYaw, 7, dt);
+      head.rotation.x = THREE.MathUtils.damp(head.rotation.x, lookPitch, 7, dt);
+      const bounce = Math.abs(Math.sin(elapsed * 5.5));
+      body.position.y = typing * bounce * 0.012;
       arms.forEach((arm) => poseArm(arm, typing, elapsed));
+      legs.forEach((leg) => poseLeg(leg, typing, bounce));
+    } else {
+      legs.forEach((leg) => poseLeg(leg, 0, 0));
     }
     camera.lookAt(0.02, 0.64, 0);
     renderer.render(scene, camera);
@@ -221,13 +206,17 @@ function initHomeRobot(canvas) {
   function createArm(side) {
     const shoulder = new THREE.Group();
     shoulder.position.set(side * 0.2, 0.75, 0.02);
-    robot.add(shoulder);
+    body.add(shoulder);
     const elbow = new THREE.Group();
     elbow.position.set(side * 0.05, -0.2, 0.01);
     shoulder.add(elbow);
     capsule(shoulder, point(0, 0, 0), elbow.position, 0.04, shellMat);
     ball(shoulder, point(0, 0, 0), 0.03, jointMat);
-    ball(elbow, point(0, 0, 0), 0.026, jointMat);
+    ball(elbow, point(0, 0, 0), 0.022, jointMat);
+    const elbowBand = new THREE.Mesh(new THREE.TorusGeometry(0.03, 0.0016, 8, 18), jointMat);
+    elbowBand.rotation.x = Math.PI / 2;
+    elbowBand.position.set(0, 0, 0.01);
+    elbow.add(elbowBand);
     const wrist = new THREE.Group();
     wrist.position.set(side * 0.012, -0.24, 0.05);
     elbow.add(wrist);
@@ -241,11 +230,12 @@ function initHomeRobot(canvas) {
     const { side, shoulder, elbow, wrist } = arm;
     shoulder.rotation.order = "YXZ";
     shoulder.rotation.y = THREE.MathUtils.lerp(0, -side * 0.4, amount);
-    shoulder.rotation.x = THREE.MathUtils.lerp(0.04, -0.88, amount);
-    shoulder.rotation.z = side * THREE.MathUtils.lerp(0.08, -0.16, amount);
-    elbow.rotation.x = THREE.MathUtils.lerp(0.02, -0.12, amount);
     const tap = Math.sin(time * (side > 0 ? 11 : 14.5));
-    wrist.rotation.x = THREE.MathUtils.lerp(0.05, -0.1, amount) + amount * Math.max(0, tap) * 0.05;
+    const press = amount * Math.max(0, tap);
+    shoulder.rotation.x = THREE.MathUtils.lerp(0.04, -0.88, amount) + amount * Math.sin(time * 2.1 + side) * 0.02;
+    shoulder.rotation.z = side * THREE.MathUtils.lerp(0.08, -0.16, amount);
+    elbow.rotation.x = THREE.MathUtils.lerp(0.02, -0.12, amount) + press * 0.045;
+    wrist.rotation.x = THREE.MathUtils.lerp(0.05, -0.1, amount) + press * 0.07;
   }
 
   function addDesk() {
@@ -307,11 +297,42 @@ function initHomeRobot(canvas) {
     capsule(parent, thumbA, thumbB, 0.006, shellMat);
   }
 
-  function addKneeLine(position) {
-    const band = new THREE.Mesh(new THREE.TorusGeometry(0.034, 0.0018, 8, 20), jointMat);
-    band.rotation.x = Math.PI / 2;
-    band.position.set(position.x, position.y, position.z + 0.02);
-    add(robot, band);
+  function createLeg(side) {
+    const thigh = new THREE.Group();
+    thigh.position.set(side * 0.09, 0.44, 0.01);
+    robot.add(thigh);
+    capsule(robot, hip, thigh.position, 0.04, shellMat);
+    ball(thigh, point(0, 0, 0), 0.028, jointMat);
+    const knee = new THREE.Group();
+    knee.position.set(side * 0.01, -0.2, 0.02);
+    thigh.add(knee);
+    capsule(thigh, point(0, 0, 0), knee.position, 0.048, shellMat);
+    ball(knee, point(0, 0, 0), 0.017, jointMat);
+    const kneeBand = new THREE.Mesh(new THREE.TorusGeometry(0.034, 0.0018, 8, 20), jointMat);
+    kneeBand.rotation.x = Math.PI / 2;
+    kneeBand.position.set(0, 0, 0.02);
+    knee.add(kneeBand);
+    const ankle = point(side * 0.1, 0.12, 0.03);
+    ball(robot, ankle, 0.025, jointMat);
+    addFoot(ankle);
+    const shin = new THREE.Mesh(new THREE.CapsuleGeometry(0.04, 0.08, 6, 16), shellMat);
+    robot.add(shin);
+    return { side, thigh, knee, shin, ankle };
+  }
+
+  function poseLeg(leg, amount, bounce) {
+    const bend = amount * bounce * 0.1;
+    leg.thigh.rotation.x = -bend * 0.35;
+    leg.knee.rotation.x = bend;
+    robot.updateMatrixWorld(true);
+    const kneePoint = new THREE.Vector3();
+    leg.knee.getWorldPosition(kneePoint);
+    robot.worldToLocal(kneePoint);
+    const delta = leg.ankle.clone().sub(kneePoint);
+    const length = Math.max(0.04, delta.length());
+    leg.shin.position.copy(kneePoint).lerp(leg.ankle, 0.5);
+    leg.shin.scale.set(1, Math.max(0.15, (length - 0.068) / 0.08), 1);
+    leg.shin.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), delta.normalize());
   }
 
   function addFoot(origin) {
